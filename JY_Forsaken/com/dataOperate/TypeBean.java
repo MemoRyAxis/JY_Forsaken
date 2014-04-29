@@ -1,7 +1,6 @@
 package com.dataOperate;
 
 import java.sql.*;
-
 import java.util.*;
 
 import javax.swing.*;
@@ -185,9 +184,173 @@ public class TypeBean {
 			DB.closeConn();
 
 		}
-		return null;
+		return sn;
 
 	}
-	
+
+	/**
+	 * 为设备管理提供查询
+	 */
+	public String[] serachAllForAssets() {
+		Database DB = new Database();
+		String[] sn = null;
+		int row = 0;
+		int i = 0;
+		sql = "select * from AssetsType order by TypeID";
+		try {
+			DB.OpenConn();
+			rs = DB.executeQuery(sql);
+			if (rs.last()) {
+				row = rs.getRow();
+			}
+			if (row == 0) {
+				sn[0] = "";
+				sn[1] = "";
+				sn[2] = "";
+			} else {
+				sn = new String[row];
+				rs.first();
+				rs.previous();
+				while (rs.next()) {
+					sn[i] = rs.getString("TypeID") + "-"
+							+ rs.getString("B_Type") + "-"
+							+ rs.getString("S_Type");
+					i++;
+				}
+			}
+		} catch (Exception e) {
+
+		} finally {
+			DB.closeStmt();
+			DB.closeConn();
+		}
+		return sn;
+
+	}
+
+	/**
+	 * 人员信息综合查询（按ID查询）
+	 */
+	public String[][] searchAll(String f1) {
+		this.field1 = f1;
+		Database DB = new Database();
+		String[][] sn = null;
+		int row = 0;
+		int i = 0;
+		sql = "select * from AssetsType where TypeID=" + field1
+				+ " order by TypeID";
+		try {
+			DB.OpenConn();
+			rs = DB.executeQuery(sql);
+			if (rs.last()) {
+				row = rs.getRow();
+			}
+			if (row == 0) {
+				sn = null;
+			} else {
+				sn = new String[row][6];
+				rs.first();
+				rs.previous();
+				while (rs.next()) {
+					sn[i][0] = rs.getString("TypeID");
+					sn[i][1] = rs.getString("B_Type");
+					sn[i][2] = rs.getString("S_Type");
+					i++;
+				}
+			}
+		} catch (Exception e) {
+
+		} finally {
+			DB.closeStmt();
+			DB.closeConn();
+		}
+		return sn;
+
+	}
+
+	/**
+	 * 获得新的ID
+	 */
+	public int getId() {
+		Database DB = new Database();
+		int ID = 1;
+		sql = "select max(TypeID) from AssesetsType";
+		try {
+			DB.OpenConn();
+			rs = DB.executeQuery(sql);
+			if (rs.next()) {
+				ID = rs.getInt(1) + 1;
+			} else {
+				ID = 1;
+			}
+		} catch (Exception e) {
+
+		} finally {
+			DB.closeStmt();
+			DB.closeConn();
+		}
+		return ID;
+	}
+
+	/**
+	 * 获取列表中所有的编号
+	 */
+	public String[] getAllId() {
+		String[] s = null;
+		int row = 0;
+		int i = 0;
+		Database DB = new Database();
+		sql = "select TypeID from AssetsType order by TypeID";
+		try {
+			DB.OpenConn();
+			rs = DB.executeQuery(sql);
+			if (rs.last()) {
+				row = rs.getRow();
+			}
+			if (row == 0) {
+				s = null;
+			} else {
+				s = new String[row];
+				rs.first();
+				rs.previous();
+				while (rs.next()) {
+					s[i] = rs.getString(1);
+					i++;
+				}
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		} finally {
+			DB.closeStmt();
+			DB.closeConn();
+		}
+		return s;
+	}
+
+	/**
+	 * 按编号查询信息
+	 */
+	public String getDeptStr(String f1) {
+		Database DB = new Database();
+		this.field1 = f1;
+		String s = "";
+		sql = "select * from AssetsType where TypeID =" + field1;
+		try {
+			DB.OpenConn();
+			rs = DB.executeQuery(sql);
+			if (rs.next()) {
+				s = rs.getString("B_Type") + "-" + rs.getString("S_Type");
+			} else {
+				s = null;
+			}
+		} catch (Exception e) {
+
+		} finally {
+			DB.closeStmt();
+			DB.closeConn();
+		}
+		return s;
+
+	}
 
 }

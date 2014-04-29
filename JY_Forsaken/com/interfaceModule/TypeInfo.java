@@ -50,7 +50,7 @@ public class TypeInfo extends JFrame implements ActionListener,
 
 	JButton exitInfo = new JButton();// 定义图形界面元素
 
-	JScrollPane jScrollPane;
+	JScrollPane jScrollPane1;
 
 	JTable jTable;
 
@@ -85,13 +85,19 @@ public class TypeInfo extends JFrame implements ActionListener,
 		// TODO 自动生成方法存根
 		contentPane = this.getContentPane();
 		contentPane.setLayout(new BorderLayout());
-		
+
 		TypeBean bean = new TypeBean();
-//		colValue = bean.
-	
-		
-		
-		
+		colValue = bean.searchAll();
+		jTable = new JTable(colValue, colName);
+		jTable.setPreferredScrollableViewportSize(new Dimension(400, 300));
+		listSelectionModel = jTable.getSelectionModel();
+		listSelectionModel
+				.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		listSelectionModel.addListSelectionListener(this);
+		jScrollPane1 = new JScrollPane(jTable);
+		jScrollPane1.setPreferredSize(new Dimension(400, 300));
+
+		upPanel.add(jScrollPane1);
 
 	}
 
