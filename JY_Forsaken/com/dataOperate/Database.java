@@ -11,7 +11,8 @@ public class Database {
 	String driver = "com.mysql.jdbc.Driver";
 	String strurl = "jdbc:mysql://127.0.0.1:3306/equipment";
 	String user = "root";
-	String password = "sys406";
+//	String password = "sys406";
+	String password = "liuxiaoyi123";
 
 	public Database() {
 
