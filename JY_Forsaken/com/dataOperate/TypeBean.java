@@ -1,11 +1,8 @@
 package com.dataOperate;
 
-import java.sql.*;
-import java.util.*;
+import java.sql.ResultSet;
 
-import javax.swing.*;
-
-import com.dataOperate.*;
+import javax.swing.JOptionPane;
 
 public class TypeBean {
 	String sql;
@@ -45,7 +42,6 @@ public class TypeBean {
 				DB.executeUpdate(sql);
 				JOptionPane.showMessageDialog(null, "加了一条新记录,欧耶！");
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				System.out.println(e);
 				JOptionPane.showMessageDialog(null, "啊哦，没存上~", "错误",
 						JOptionPane.ERROR_MESSAGE);
@@ -72,7 +68,11 @@ public class TypeBean {
 			JOptionPane.showMessageDialog(null, "请输入所属机房", "错误",
 					JOptionPane.ERROR_MESSAGE);
 			return;
-		} else {
+		}else if(field3 == null || field3.equals("")){
+			JOptionPane.showMessageDialog(null, "请输入管理人员","错误",JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		else {
 			sql = "update AssetsType set B_Type = '" + field2 + "',S_Type = '"
 					+ field3 + "' where TypeID = " + field1 + " ";
 
@@ -81,7 +81,6 @@ public class TypeBean {
 				DB.executeUpdate(sql);
 				JOptionPane.showMessageDialog(null, "您已成功修改了这条记录！");
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				System.out.println(e);
 				JOptionPane.showMessageDialog(null, "又失败了", "错误",
 						JOptionPane.ERROR_MESSAGE);
@@ -106,7 +105,6 @@ public class TypeBean {
 			DB.executeUpdate(sql);
 			JOptionPane.showMessageDialog(null, "成功的干掉了一个数据！");
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			System.out.println(e);
 			JOptionPane.showMessageDialog(null, "木有删掉~", "错误",
 					JOptionPane.ERROR_MESSAGE);
@@ -125,7 +123,7 @@ public class TypeBean {
 		Database DB = new Database();
 		this.field1 = f1;
 		String[] s = new String[7];
-		sql = "select * from AssetsType Where TypeID = " + field1 + "";
+		sql = "select * from AssetsType where TypeID = " + field1 + "";
 		try {
 			DB.OpenConn();
 			rs = DB.executeQuery(sql);
@@ -191,6 +189,7 @@ public class TypeBean {
 	/**
 	 * 为设备管理提供查询
 	 */
+	@SuppressWarnings("null")
 	public String[] serachAllForAssets() {
 		Database DB = new Database();
 		String[] sn = null;

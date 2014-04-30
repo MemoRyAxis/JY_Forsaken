@@ -1,6 +1,5 @@
 package com.dataOperate;
 
-import java.io.UnsupportedEncodingException;
 import java.sql.*;
 
 public class Database {
@@ -11,8 +10,8 @@ public class Database {
 	String driver = "com.mysql.jdbc.Driver";
 	String strurl = "jdbc:mysql://127.0.0.1:3306/equipment";
 	String user = "root";
-//	String password = "sys406";
 	String password = "liuxiaoyi123";
+//	String password = "sys406";
 
 	public Database() {
 
@@ -26,7 +25,6 @@ public class Database {
 			Class.forName(driver);
 			conn = DriverManager.getConnection(strurl, user, password);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			System.err.println("OpenConn:" + e.getMessage());
 		}
 	}
@@ -42,7 +40,6 @@ public class Database {
 					ResultSet.CONCUR_READ_ONLY);
 			rs = stmt.executeQuery(sql);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			System.err.println("executeQuery:" + e.getMessage());
 		}
 		return rs;
@@ -62,18 +59,17 @@ public class Database {
 			stmt.executeQuery(sql);
 			conn.commit();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			System.err.println("executeUpdate:" + e.getMessage());
 		}
 
 	}
-	
-	public void closeStmt(){
+
+	public void closeStmt() {
 		try {
-			stmt.close();
+			if (stmt != null)
+				stmt.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block]
-			System.err.println("closeStmt:"+e.getMessage());
+			System.err.println("closeStmt:" + e.getMessage());
 		}
 	}
 
@@ -82,9 +78,9 @@ public class Database {
 	 */
 	public void closeConn() {
 		try {
-			conn.close();
+			if (conn != null)
+				conn.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			System.err.println("aq.closeConn:" + e.getMessage());
 		}
 	}
@@ -96,7 +92,6 @@ public class Database {
 			} else
 				str = new String(str.getBytes("ISO-8859-1"), "GBK");
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			System.out.println(e);
 		}
 		return str;

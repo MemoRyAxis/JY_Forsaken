@@ -1,6 +1,5 @@
 package com.mainInterface;
 
-import com.interfaceModule.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,7 +9,7 @@ import java.net.*;
 
 import javax.swing.*;
 
-import com.sun.xml.internal.bind.v2.model.core.TypeInfo;
+import com.interfaceModule.TypeInfo;
 
 public class EquipmentMain extends JFrame implements ActionListener {
 	/**
@@ -100,7 +99,6 @@ public class EquipmentMain extends JFrame implements ActionListener {
 	 * 菜单组件程序初始化
 	 */
 	private void Init() {
-		// TODO 自动生成方法存根
 		Container contentPane = this.getContentPane();
 		contentPane.setLayout(new BorderLayout());
 
@@ -227,21 +225,26 @@ public class EquipmentMain extends JFrame implements ActionListener {
 		// 关闭程序的操作，这是一个匿名类
 	}
 
+	/*
+	 * 事件处理
+	 */
 	public void actionPerformed(ActionEvent e) {
-		// TODO 自动生成方法存根
 		Object obj = e.getSource();
 
 		if (obj == itemExit) {// 退出
 			System.exit(0);
+		} else if (obj == itemTypeMan) { // 设备信息管理
+			TypeInfo typeMan = new TypeInfo();
+			typeMan.downInit();
+			typeMan.pack();
+			typeMan.setVisible(true);
 		}
-//		else if (obj == itemTypeMan) { // 设备信息管理
-//		// TypeInfo typeMan = new TypeInfo();
-//		}
-
-	}
+		// else if(obj == itemAddEquipment)//增加设备信息
+		//
+		//
+ 	}
 
 	Image getImage(String filename) {
-		// TODO 自动生成方法存根
 		URLClassLoader urlLoader = (URLClassLoader) this.getClass()
 				.getClassLoader();
 		URL url = null;
@@ -253,7 +256,6 @@ public class EquipmentMain extends JFrame implements ActionListener {
 		try {
 			mediatracker.waitForID(0);
 		} catch (InterruptedException e) {
-			// TODO 自动生成 catch 块
 			image = null;
 		}
 		if (mediatracker.isErrorID(0)) {

@@ -1,8 +1,9 @@
 package com.mainInterface;
 
-import javax.swing.UIManager;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 
-import java.awt.*;
+import javax.swing.UIManager;
 
 /**
  * @author 刘骁义
@@ -38,7 +39,6 @@ public class EquipmentMS {
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (Exception e) {
-			// TODO 自动生成 catch 块
 			e.printStackTrace();
 		} 
 		new EquipmentMS();
