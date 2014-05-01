@@ -9,6 +9,7 @@ import java.net.*;
 
 import javax.swing.*;
 
+import com.interfaceModule.assetsInfo.AddAssets;
 import com.interfaceModule.sysMod.TypeInfo;
 
 public class EquipmentMain extends JFrame implements ActionListener {
@@ -238,11 +239,18 @@ public class EquipmentMain extends JFrame implements ActionListener {
 			typeMan.downInit();
 			typeMan.pack();
 			typeMan.setVisible(true);
+		} else if (obj == itemAddEquipment) {// 增加设备信息
+			AddAssets add = new AddAssets();
+			add.downInit();
+			add.pack();
+			add.setVisible(true);
+
+		}else if (obj == itemDeleteEquipment){//修改设备信息
+			//
+			//
 		}
-		// else if(obj == itemAddEquipment)//增加设备信息
-		//
-		//
- 	}
+
+	}
 
 	Image getImage(String filename) {
 		URLClassLoader urlLoader = (URLClassLoader) this.getClass()

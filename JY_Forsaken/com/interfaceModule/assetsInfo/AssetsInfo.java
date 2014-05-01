@@ -7,13 +7,16 @@ import java.net.*;
 import javax.swing.*;
 
 import com.dataOperate.TypeBean;
-import com.interfaceModule.sysMod.TypeInfo;
 
 /**
  * @author LGM_C4 设备I信息综合管理类 提供主界面，供其他类集成
  */
 public class AssetsInfo extends JFrame implements ActionListener, ItemListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	Container contentPane;
 	JPanel centerPanel = new JPanel();
 	JPanel upPanel = new JPanel();
@@ -79,7 +82,7 @@ public class AssetsInfo extends JFrame implements ActionListener, ItemListener {
 		}
 	}
 
-	private void Init() throws Exception {
+	public void Init() throws Exception {
 		contentPane = this.getContentPane();
 		contentPane.setLayout(new BorderLayout());
 		Font font = new Font("Dialog", 0, 12);
@@ -119,7 +122,7 @@ public class AssetsInfo extends JFrame implements ActionListener, ItemListener {
 		gridBag.setConstraints(jTextField2, gridBagCon);
 		centerPanel.add(jTextField2);
 
-		jLabel3.setText("所属类型");
+		jLabel3.setText("分配信息");
 		jLabel3.setFont(font);
 		gridBagCon = new GridBagConstraints();
 		gridBagCon.gridx = 0;
@@ -299,7 +302,6 @@ public class AssetsInfo extends JFrame implements ActionListener, ItemListener {
 		return image;
 	}
 
-	@Override
 	public void itemStateChanged(ItemEvent e) {
 		if (e.getStateChange() == ItemEvent.SELECTED) {
 
@@ -307,7 +309,6 @@ public class AssetsInfo extends JFrame implements ActionListener, ItemListener {
 
 	}
 
-	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object obj = e.getSource();
 		if (obj == searchInfo) {// 查询
@@ -326,7 +327,7 @@ public class AssetsInfo extends JFrame implements ActionListener, ItemListener {
 
 	}
 
-	private void setNull() {
+	public void setNull() {
 
 		jTextField1.setText(null);
 		jTextField2.setText(null);

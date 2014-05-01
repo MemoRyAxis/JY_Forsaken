@@ -333,7 +333,7 @@ public class TypeBean {
 		Database DB = new Database();
 		this.field1 = f1;
 		String s = "";
-		sql = "select * from AssetsType where TypeID =" + field1;
+		sql = "select * from AssetsType where TypeID =" + field1+"";
 		try {
 			DB.OpenConn();
 			rs = DB.executeQuery(sql);
