@@ -9,7 +9,7 @@ import java.net.*;
 
 import javax.swing.*;
 
-import com.interfaceModule.TypeInfo;
+import com.interfaceModule.sysMod.TypeInfo;
 
 public class EquipmentMain extends JFrame implements ActionListener {
 	/**

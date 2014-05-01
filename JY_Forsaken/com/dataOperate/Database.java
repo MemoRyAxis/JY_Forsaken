@@ -56,7 +56,8 @@ public class Database {
 		try {
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
 					ResultSet.CONCUR_READ_ONLY);
-			stmt.executeQuery(sql);
+			stmt.execute(sql);
+			conn.setAutoCommit(false);
 			conn.commit();
 		} catch (SQLException e) {
 			System.err.println("executeUpdate:" + e.getMessage());

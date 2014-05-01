@@ -1,4 +1,4 @@
-package com.interfaceModule;
+package com.interfaceModule.sysMod;
 
 import javax.swing.*;
 

@@ -190,7 +190,7 @@ public class TypeBean {
 	 * 为设备管理提供查询
 	 */
 	@SuppressWarnings("null")
-	public String[] serachAllForAssets() {
+	public String[] searchAllForAssets() {
 		Database DB = new Database();
 		String[] sn = null;
 		int row = 0;
@@ -273,7 +273,7 @@ public class TypeBean {
 	public int getId() {
 		Database DB = new Database();
 		int ID = 1;
-		sql = "select max(TypeID) from AssesetsType";
+		sql = "select max(TypeID) from AssetsType";
 		try {
 			DB.OpenConn();
 			rs = DB.executeQuery(sql);
