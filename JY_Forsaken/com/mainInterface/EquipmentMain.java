@@ -9,8 +9,11 @@ import java.net.*;
 
 import javax.swing.*;
 
-import com.interfaceModule.assetsInfo.AddAssets;
-import com.interfaceModule.sysMod.TypeInfo;
+import com.interfaceModule.assetsInfo.*;
+import com.interfaceModule.person.AddPerson;
+import com.interfaceModule.person.DeletePerson;
+import com.interfaceModule.person.ModifyPerson;
+import com.interfaceModule.sysMod.*;
 
 public class EquipmentMain extends JFrame implements ActionListener {
 	/**
@@ -245,9 +248,33 @@ public class EquipmentMain extends JFrame implements ActionListener {
 			add.pack();
 			add.setVisible(true);
 
-		}else if (obj == itemDeleteEquipment){//修改设备信息
-			//
-			//
+		} else if (obj == itemModifyEquipment) {// 修改设备信息
+			ModifyAssets modify = new ModifyAssets();
+			modify.downInit();
+			modify.pack();
+			modify.setVisible(true);
+			// System.out.println("enter : itemModifyEquipment");
+		} else if (obj == itemDeleteEquipment) {// 删除设备信息
+			DeleteAssets delete = new DeleteAssets();
+			delete.downInit();
+			delete.pack();
+			delete.setVisible(true);
+		} else if (obj == itemAddPerson) {// 增加人员信息
+			AddPerson add = new AddPerson();
+			add.downInit();
+			add.pack();
+			add.setVisible(true);
+		} else if (obj == itemModifyPerson) {// 修改人员信息
+			ModifyPerson modify = new ModifyPerson();
+			modify.downInit();
+			modify.pack();
+			modify.setVisible(true);
+		} else if (obj == itemDeletePerson) {// 删除人员信息
+			DeletePerson delete = new DeletePerson();
+			delete.downInit();
+			delete.pack();
+			delete.setVisible(true);
+
 		}
 
 	}

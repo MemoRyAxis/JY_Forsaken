@@ -1,25 +1,21 @@
-package com.interfaceModule.assetsInfo;
+package com.interfaceModule.person;
 
 import java.awt.*;
-import java.awt.event.*;
 import java.net.*;
+import java.awt.event.*;
 
 import javax.swing.*;
 
-import com.dataOperate.TypeBean;
-
-/**
- * @author LGM_C4 设备I信息综合管理类 提供主界面，供其他类集成
- */
-public class AssetsInfo extends JFrame implements ActionListener, ItemListener {
+public class PersonInfo extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
+
 	Container contentPane;
 	JPanel centerPanel = new JPanel();
 	JPanel upPanel = new JPanel();
 	JPanel downPanel = new JPanel();
 
-	// 设置框架大小
+	// 框架大小
 	Dimension faceSize = new Dimension(800, 500);
 
 	// 定义图形界面元素
@@ -33,18 +29,15 @@ public class AssetsInfo extends JFrame implements ActionListener, ItemListener {
 	JLabel jLabel8 = new JLabel();
 	JLabel jLabel9 = new JLabel();
 
-	JTextField jTextField1 = new JTextField(15); // 设备编号
-	JTextField jTextField2 = new JTextField(15); // 设备名称
-	JTextField jTextField3 = new JTextField(15); // 所属类型
-	JTextField jTextField4 = new JTextField(15); // 设备型号
-	JTextField jTextField5 = new JTextField(15); // 设备价格
-	JTextField jTextField6 = new JTextField(15); // 购买日期
-	JTextField jTextField7 = new JTextField(15); // 资产状态
-	JTextField jTextField8 = new JTextField(15); // 备注
+	JTextField jTextField1 = new JTextField(15);
+	JTextField jTextField2 = new JTextField(15);
+	JTextField jTextField3 = new JTextField(15);
+	JTextField jTextField4 = new JTextField(15);
+	JTextField jTextField5 = new JTextField(15);
+	JTextField jTextField6 = new JTextField(15);
+	JTextField jTextField7 = new JTextField(15);
+	JTextField jTextField8 = new JTextField(15);
 	JTextField jTextField9 = new JTextField(46);
-
-	JComboBox jComboBox1 = null;
-	JComboBox jComboBox2 = null;
 
 	JButton searchInfo = new JButton();
 	JButton addInfo = new JButton();
@@ -63,23 +56,23 @@ public class AssetsInfo extends JFrame implements ActionListener, ItemListener {
 	GridBagLayout gridBag = new GridBagLayout();
 	GridBagConstraints gridBagCon;
 
-	public AssetsInfo() {
+	public PersonInfo() {
 		// 设置框架大小
 		this.setSize(faceSize);
 		// 设置标题
-		this.setTitle("设备综合信息管理");
+		this.setTitle("人员综合信息管理");
 		this.setResizable(false);
 		// 设置程序图标
 		this.setIconImage(getImage("image/smile.png"));
-
 		try {
 			Init();
 		} catch (Exception e) {
 			e.printStackTrace();
+
 		}
 	}
 
-	public void Init() throws Exception {
+	private void Init() {
 		contentPane = this.getContentPane();
 		contentPane.setLayout(new BorderLayout());
 		Font font = new Font("Dialog", 0, 12);
@@ -87,7 +80,7 @@ public class AssetsInfo extends JFrame implements ActionListener, ItemListener {
 		// 中部面板布局
 		centerPanel.setLayout(gridBag);
 
-		jLabel1.setText("设备编号");
+		jLabel1.setText("编          号: ");
 		jLabel1.setFont(font);
 		gridBagCon = new GridBagConstraints();
 		gridBagCon.gridx = 0;
@@ -103,7 +96,7 @@ public class AssetsInfo extends JFrame implements ActionListener, ItemListener {
 		gridBag.setConstraints(jTextField1, gridBagCon);
 		centerPanel.add(jTextField1);
 
-		jLabel2.setText("设备名称");
+		jLabel2.setText("姓          名: ");
 		jLabel2.setFont(font);
 		gridBagCon = new GridBagConstraints();
 		gridBagCon.gridx = 2;
@@ -119,7 +112,7 @@ public class AssetsInfo extends JFrame implements ActionListener, ItemListener {
 		gridBag.setConstraints(jTextField2, gridBagCon);
 		centerPanel.add(jTextField2);
 
-		jLabel3.setText("分配信息");
+		jLabel3.setText("性          别: ");
 		jLabel3.setFont(font);
 		gridBagCon = new GridBagConstraints();
 		gridBagCon.gridx = 0;
@@ -128,17 +121,14 @@ public class AssetsInfo extends JFrame implements ActionListener, ItemListener {
 		gridBag.setConstraints(jLabel3, gridBagCon);
 		centerPanel.add(jLabel3);
 
-		TypeBean tbean = new TypeBean();
-		String[] allType = tbean.searchAllForAssets();
-		jComboBox1 = new JComboBox(allType);
 		gridBagCon = new GridBagConstraints();
 		gridBagCon.gridx = 1;
 		gridBagCon.gridy = 1;
 		gridBagCon.insets = new Insets(10, 1, 10, 15);
-		gridBag.setConstraints(jComboBox1, gridBagCon);
-		centerPanel.add(jComboBox1);
+		gridBag.setConstraints(jTextField3, gridBagCon);
+		centerPanel.add(jTextField3);
 
-		jLabel4.setText("设备型号");
+		jLabel4.setText("部          门: ");
 		jLabel4.setFont(font);
 		gridBagCon = new GridBagConstraints();
 		gridBagCon.gridx = 2;
@@ -154,7 +144,7 @@ public class AssetsInfo extends JFrame implements ActionListener, ItemListener {
 		gridBag.setConstraints(jTextField4, gridBagCon);
 		centerPanel.add(jTextField4);
 
-		jLabel5.setText("设备价格");
+		jLabel5.setText("职          位: ");
 		jLabel5.setFont(font);
 		gridBagCon = new GridBagConstraints();
 		gridBagCon.gridx = 0;
@@ -170,7 +160,7 @@ public class AssetsInfo extends JFrame implements ActionListener, ItemListener {
 		gridBag.setConstraints(jTextField5, gridBagCon);
 		centerPanel.add(jTextField5);
 
-		jLabel6.setText("购买日期");
+		jLabel6.setText("其          他: ");
 		jLabel6.setFont(font);
 		gridBagCon = new GridBagConstraints();
 		gridBagCon.gridx = 2;
@@ -185,38 +175,6 @@ public class AssetsInfo extends JFrame implements ActionListener, ItemListener {
 		gridBagCon.insets = new Insets(10, 1, 10, 10);
 		gridBag.setConstraints(jTextField6, gridBagCon);
 		centerPanel.add(jTextField6);
-
-		jLabel7.setText("设备状态");
-		jLabel7.setFont(font);
-		gridBagCon = new GridBagConstraints();
-		gridBagCon.gridx = 0;
-		gridBagCon.gridy = 3;
-		gridBagCon.insets = new Insets(10, 10, 10, 1);
-		gridBag.setConstraints(jLabel7, gridBagCon);
-		centerPanel.add(jLabel7);
-
-		gridBagCon = new GridBagConstraints();
-		gridBagCon.gridx = 1;
-		gridBagCon.gridy = 3;
-		gridBagCon.insets = new Insets(10, 1, 10, 15);
-		gridBag.setConstraints(jTextField7, gridBagCon);
-		centerPanel.add(jTextField7);
-
-		jLabel8.setText("备           注");
-		jLabel8.setFont(font);
-		gridBagCon = new GridBagConstraints();
-		gridBagCon.gridx = 2;
-		gridBagCon.gridy = 3;
-		gridBagCon.insets = new Insets(10, 15, 10, 1);
-		gridBag.setConstraints(jLabel8, gridBagCon);
-		centerPanel.add(jLabel8);
-
-		gridBagCon = new GridBagConstraints();
-		gridBagCon.gridx = 3;
-		gridBagCon.gridy = 3;
-		gridBagCon.insets = new Insets(10, 1, 10, 10);
-		gridBag.setConstraints(jTextField8, gridBagCon);
-		centerPanel.add(jTextField8);
 
 		contentPane.add(centerPanel, BorderLayout.CENTER);
 
@@ -270,8 +228,6 @@ public class AssetsInfo extends JFrame implements ActionListener, ItemListener {
 		clearInfo.addActionListener(this);
 		exitInfo.addActionListener(this);
 
-		jComboBox1.addItemListener(this);
-
 		modifyInfo.setEnabled(false);
 		deleteInfo.setEnabled(false);
 		saveInfo.setEnabled(false);
@@ -299,13 +255,10 @@ public class AssetsInfo extends JFrame implements ActionListener, ItemListener {
 		return image;
 	}
 
-	public void itemStateChanged(ItemEvent e) {
-		if (e.getStateChange() == ItemEvent.SELECTED) {
-
-		}
-
-	}
-
+	/*
+	 * 事件处理
+	 */
+	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object obj = e.getSource();
 		if (obj == searchInfo) {// 查询
@@ -324,8 +277,10 @@ public class AssetsInfo extends JFrame implements ActionListener, ItemListener {
 
 	}
 
-	public void setNull() {
-
+	/**
+	 * 清空文本
+	 */
+	void setNull() {
 		jTextField1.setText(null);
 		jTextField2.setText(null);
 		jTextField3.setText(null);

@@ -1,6 +1,5 @@
 package com.dataOperate;
 
-import java.util.*;
 import java.sql.*;
 
 import javax.swing.*;
@@ -188,7 +187,7 @@ public class AssetsBean {
 		Database DB = new Database();
 		this.field1 = f1;
 		String[] s = new String[7];
-		sql = "select * from AssetsType where AssetsID = " + field1 + "";
+		sql = "select * from Assets where AssetsID = " + field1 + "";
 		try {
 			DB.OpenConn();
 			rs = DB.executeQuery(sql);

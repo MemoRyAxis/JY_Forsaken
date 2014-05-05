@@ -35,6 +35,7 @@ public class Database {
 	public ResultSet executeQuery(String sql) {
 		stmt = null;
 		rs = null;
+		System.out.println(sql);
 		try {
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
 					ResultSet.CONCUR_READ_ONLY);
@@ -52,7 +53,7 @@ public class Database {
 	public void executeUpdate(String sql) {
 		stmt = null;
 		rs = null;
-
+		System.out.println(sql);
 		try {
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
 					ResultSet.CONCUR_READ_ONLY);
