@@ -14,6 +14,7 @@ import com.interfaceModule.person.AddPerson;
 import com.interfaceModule.person.DeletePerson;
 import com.interfaceModule.person.ModifyPerson;
 import com.interfaceModule.sysMod.*;
+import com.interfaceModule.use.UseAssets;
 
 public class EquipmentMain extends JFrame implements ActionListener {
 	/**
@@ -275,6 +276,10 @@ public class EquipmentMain extends JFrame implements ActionListener {
 			delete.pack();
 			delete.setVisible(true);
 
+		} else if (obj == itemUsing) {// 资产领用
+			UseAssets use = new UseAssets();
+			use.pack();
+			use.setVisible(true);
 		}
 
 	}

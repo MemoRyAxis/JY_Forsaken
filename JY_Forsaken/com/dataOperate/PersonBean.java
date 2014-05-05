@@ -198,8 +198,8 @@ public class PersonBean {
 				rs.first();
 				rs.previous();
 				while (rs.next()) {
-					sn[i] = rs.getString("personid" + "-"
-							+ rs.getString("name"));
+					sn[i] = rs.getString("personid") + "-"
+							+ rs.getString("name");
 					i++;
 				}
 			}

@@ -3,15 +3,14 @@ package com.interfaceModule.use;
 import java.awt.*;
 import java.awt.event.*;
 import java.net.*;
+import java.text.*;
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
+import javax.swing.event.*;
 
 import com.dataOperate.AssetsBean;
 import com.dataOperate.AssetsTrjnBean;
 import com.dataOperate.PersonBean;
-import com.sun.corba.se.spi.ior.MakeImmutable;
 
 /**
  * @author LGM_C4 设备领用
@@ -40,9 +39,9 @@ public class UseAssets extends JFrame implements ActionListener,
 	String AssetsID = null; // 设备编号
 	JComboBox jComboBox1 = null; // 领用人
 	String PersonID = "1";
-	JTextField jTextField1 = new JTextField();// 设备名称
-	JTextField jTextField2 = new JTextField();// 用途
-	JTextField jTextField3 = new JTextField();// 备注
+	JTextField jTextField1 = new JTextField(15);// 设备名称
+	JTextField jTextField2 = new JTextField(15);// 用途
+	JTextField jTextField3 = new JTextField(15);// 备注
 	JButton modifyInfo = new JButton();
 	JButton clearInfo = new JButton();
 
@@ -63,8 +62,8 @@ public class UseAssets extends JFrame implements ActionListener,
 		this.setIconImage(getImage("image/smile.png"));
 		// 设置运行时临时窗口的位置
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		this.setLocation((screenSize.width - 400) / 2,
-				(screenSize.height - 300) / 2 + 45);
+		this.setLocation((int) (screenSize.width - 400) / 2,
+				((int) screenSize.height - 500) / 2 + 45);
 
 		try {
 			Init();
@@ -102,7 +101,7 @@ public class UseAssets extends JFrame implements ActionListener,
 	/**
 	 * 生成主界面
 	 */
-	private void makeFrame() throws Exception {
+	public void makeFrame() throws Exception {
 		contentPane = this.getContentPane();
 		contentPane.setLayout(new BorderLayout());
 		contentPane.add(upPanel, BorderLayout.SOUTH);
@@ -112,21 +111,21 @@ public class UseAssets extends JFrame implements ActionListener,
 	/**
 	 * 上部面板布局
 	 */
-	private void Init() throws Exception {
+	public void Init() throws Exception {
 		AssetsBean bean = new AssetsBean();
 		upPanel.setLayout(gridBag);
-		Font font = new Font("Dialog", 0, 16);
+		Font font = new Font("Dialog", 0, 12);
 		try {
-			jLabel1.setText("设备领用管理");
-			jLabel1.setFont(font);
+			jLabel.setText("设备领用管理");
+			jLabel.setFont(new Font("Dialog", 0, 16));
 			gridBagCon = new GridBagConstraints();
 			gridBagCon.gridx = 0;
 			gridBagCon.gridy = 0;
 			gridBagCon.gridwidth = 4;
 			gridBagCon.gridheight = 1;
 			gridBagCon.insets = new Insets(0, 10, 0, 10);
-			gridBag.setConstraints(jLabel1, gridBagCon);
-			centerPanel.add(jLabel1);
+			gridBag.setConstraints(jLabel, gridBagCon);
+			upPanel.add(jLabel);
 
 			colValue = bean.searchAllForUse();
 			jTable = new JTable(colValue, colName);
@@ -152,10 +151,12 @@ public class UseAssets extends JFrame implements ActionListener,
 			gridBagCon = new GridBagConstraints();
 			gridBagCon.gridx = 0;
 			gridBagCon.gridy = 2;
+//			gridBagCon.gridwidth = 2;
+//			gridBagCon.gridheight = 1;
 			gridBagCon.insets = new Insets(10, 20, 10, 1);
 			gridBag.setConstraints(jLabel1, gridBagCon);
 			upPanel.add(jLabel1);
-
+			
 			gridBagCon = new GridBagConstraints();
 			gridBagCon.gridx = 1;
 			gridBagCon.gridy = 2;
@@ -169,11 +170,12 @@ public class UseAssets extends JFrame implements ActionListener,
 			gridBagCon.gridx = 2;
 			gridBagCon.gridy = 2;
 			gridBagCon.insets = new Insets(10, 20, 10, 1);
-			gridBag.setConstraints(jLabel1, gridBagCon);
+			gridBag.setConstraints(jLabel2, gridBagCon);
 			upPanel.add(jLabel2);
 
 			PersonBean pbean = new PersonBean();
 			String[] allType = pbean.searchAllName();
+			jComboBox1 = new JComboBox(allType);
 			gridBagCon = new GridBagConstraints();
 			gridBagCon.gridx = 3;
 			gridBagCon.gridy = 2;
@@ -197,7 +199,7 @@ public class UseAssets extends JFrame implements ActionListener,
 			gridBag.setConstraints(jTextField2, gridBagCon);
 			upPanel.add(jTextField2);
 
-			jLabel4.setText("备          注");
+			jLabel4.setText("备          注:");
 			jLabel4.setFont(font);
 			gridBagCon = new GridBagConstraints();
 			gridBagCon.gridx = 2;
@@ -265,9 +267,16 @@ public class UseAssets extends JFrame implements ActionListener,
 		return image;
 	}
 
+	/*
+	 * 下拉菜单处理
+	 */
 	@Override
-	public void itemStateChanged(ItemEvent arg0) {
-		// TODO Auto-generated method stub
+	public void itemStateChanged(ItemEvent e) {
+		if (e.getStateChange() == ItemEvent.SELECTED) {
+			String tempStr = "" + e.getItem();
+			int i = tempStr.indexOf("-");
+			PersonID = tempStr.substring(0, i);
+		}
 
 	}
 
@@ -276,18 +285,49 @@ public class UseAssets extends JFrame implements ActionListener,
 	 */
 	public void actionPerformed(ActionEvent e) {
 		Object obj = e.getSource();
-		if(obj == modifyInfo){//修改
+		if (obj == modifyInfo) {// 修改
 			AssetsBean bean = new AssetsBean();
 			bean.updateStatus(AssetsID, "借出");
-			
+
 			AssetsTrjnBean atbean = new AssetsTrjnBean();
+			JourNo = "" + atbean.getId();// 获取ID
+			java.util.Date now = new java.util.Date();
+			DateFormat date = DateFormat.getDateTimeInstance();
+			String f4 = "" + date.format(now);
+			atbean.add(JourNo, "设备借用", AssetsID, f4, PersonID,
+					jTextField2.getText(), jTextField2.getText());
+			// 重新生成界面
+			this.dispose();
+
+			UseAssets useAssets = new UseAssets();
+			useAssets.pack();
+			useAssets.setVisible(true);
+		} else if (obj == clearInfo) {// 清空
+			setNull();
 		}
+		jTable.revalidate();
 
 	}
 
+	/*
+	 * 当表格被选中时的操作
+	 */
 	@Override
-	public void valueChanged(ListSelectionEvent e) {
-		// TODO Auto-generated method stub
+	public void valueChanged(ListSelectionEvent lse) {
+		int[] selectedRow = jTable.getSelectedRows();
+		int[] selectedCol = jTable.getSelectedColumns();
+		// 定义文本框显示的内容
+		for (int i = 0; i < selectedRow.length; i++) {
+			for (int j = 0; j < selectedCol.length; j++) {
+				jTextField1.setText(colValue[selectedRow[i]][1]);// 名称
+				AssetsID = colValue[selectedRow[i]][0];// 设备编号
+			}
+		}
+		// 设置是否可操作
+		jTextField2.setEnabled(true);
+		jTextField3.setEnabled(true);
+		modifyInfo.setEnabled(true);
+		clearInfo.setEnabled(true);
 
 	}
 
