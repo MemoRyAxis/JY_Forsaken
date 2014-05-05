@@ -19,9 +19,7 @@ import com.interfaceModule.use.InvalidAssets;
 import com.interfaceModule.use.UseAssets;
 
 public class EquipmentMain extends JFrame implements ActionListener {
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 
 	Dimension faceSize = new Dimension(600, 450);// 设置框架的大小
