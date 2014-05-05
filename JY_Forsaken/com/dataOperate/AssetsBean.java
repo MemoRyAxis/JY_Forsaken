@@ -493,7 +493,7 @@ public class AssetsBean {
 
 		try {
 			DB.OpenConn();
-			DB.executeQuery(sql);
+			DB.executeUpdate(sql);
 			JOptionPane.showMessageDialog(null, "²Ù×÷³É¹¦!");
 		} catch (Exception e) {
 			System.out.println(e);

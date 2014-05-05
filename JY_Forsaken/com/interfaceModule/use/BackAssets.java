@@ -2,8 +2,9 @@ package com.interfaceModule.use;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.net.*;
-import java.text.*;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.text.DateFormat;
 
 import javax.swing.*;
 import javax.swing.event.*;
@@ -12,14 +13,10 @@ import com.dataOperate.AssetsBean;
 import com.dataOperate.AssetsTrjnBean;
 import com.dataOperate.PersonBean;
 
-/**
- * @author LGM_C4 设备领用
- * 
- */
-public class UseAssets extends JFrame implements ActionListener,
+public class BackAssets extends JFrame implements ActionListener,
 		ListSelectionListener, ItemListener {
 
-	private static final long serialVersionUID = 2669604123136596814L;
+	private static final long serialVersionUID = 1L;
 
 	Container contentPane;
 	// 定义所用的面板
@@ -36,7 +33,7 @@ public class UseAssets extends JFrame implements ActionListener,
 	JLabel jLabel4 = new JLabel();
 
 	String JourNo = "1";
-	String FromAcc = "设备借用";// 操作类型
+	String FromAcc = "设备归还";// 操作类型
 	String AssetsID = null; // 设备编号
 	JComboBox jComboBox1 = null; // 领用人
 	String PersonID = "1";
@@ -56,9 +53,9 @@ public class UseAssets extends JFrame implements ActionListener,
 	GridBagLayout gridBag = new GridBagLayout();
 	GridBagConstraints gridBagCon;
 
-	public UseAssets() {
+	public BackAssets() {
 		this.setLayout(new BorderLayout());
-		this.setTitle("设备领用管理");
+		this.setTitle("设备归还管理");
 		// 设置程序图标
 		this.setIconImage(getImage("image/smile.png"));
 		// 设置运行时临时窗口的位置
@@ -73,7 +70,6 @@ public class UseAssets extends JFrame implements ActionListener,
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	/**
@@ -109,15 +105,12 @@ public class UseAssets extends JFrame implements ActionListener,
 
 	}
 
-	/**
-	 * 上部面板布局
-	 */
-	public void Init() throws Exception {
+	private void Init() throws Exception {
 		AssetsBean bean = new AssetsBean();
 		upPanel.setLayout(gridBag);
 		Font font = new Font("Dialog", 0, 12);
 		try {
-			jLabel.setText("设备领用管理");
+			jLabel.setText("设备归还管理");
 			jLabel.setFont(new Font("Dialog", 0, 16));
 			gridBagCon = new GridBagConstraints();
 			gridBagCon.gridx = 0;
@@ -128,7 +121,7 @@ public class UseAssets extends JFrame implements ActionListener,
 			gridBag.setConstraints(jLabel, gridBagCon);
 			upPanel.add(jLabel);
 
-			colValue = bean.searchAllForUse();
+			colValue = bean.searchAllForBack();
 			jTable = new JTable(colValue, colName);
 			jTable.setPreferredScrollableViewportSize(new Dimension(450, 280));
 			listSelectionModel = jTable.getSelectionModel();
@@ -152,8 +145,6 @@ public class UseAssets extends JFrame implements ActionListener,
 			gridBagCon = new GridBagConstraints();
 			gridBagCon.gridx = 0;
 			gridBagCon.gridy = 2;
-			// gridBagCon.gridwidth = 2;
-			// gridBagCon.gridheight = 1;
 			gridBagCon.insets = new Insets(10, 20, 10, 1);
 			gridBag.setConstraints(jLabel1, gridBagCon);
 			upPanel.add(jLabel1);
@@ -165,7 +156,7 @@ public class UseAssets extends JFrame implements ActionListener,
 			gridBag.setConstraints(jTextField1, gridBagCon);
 			upPanel.add(jTextField1);
 
-			jLabel2.setText("领用人员:");
+			jLabel2.setText("操作人员:");
 			jLabel2.setFont(font);
 			gridBagCon = new GridBagConstraints();
 			gridBagCon.gridx = 2;
@@ -184,7 +175,7 @@ public class UseAssets extends JFrame implements ActionListener,
 			gridBag.setConstraints(jComboBox1, gridBagCon);
 			upPanel.add(jComboBox1);
 
-			jLabel3.setText("用          途:");
+			jLabel3.setText("归还原因:");
 			jLabel3.setFont(font);
 			gridBagCon = new GridBagConstraints();
 			gridBagCon.gridx = 0;
@@ -216,7 +207,7 @@ public class UseAssets extends JFrame implements ActionListener,
 			gridBag.setConstraints(jTextField3, gridBagCon);
 			upPanel.add(jTextField3);
 
-			modifyInfo.setText("领用");
+			modifyInfo.setText("归还");
 			modifyInfo.setFont(font);
 			gridBagCon = new GridBagConstraints();
 			gridBagCon.gridx = 0;
@@ -248,6 +239,8 @@ public class UseAssets extends JFrame implements ActionListener,
 			e.printStackTrace();
 		}
 
+		// 生成上部面板
+		mainPanel.add(upPanel, BorderLayout.NORTH);
 	}
 
 	private Image getImage(String filename) {
@@ -283,40 +276,11 @@ public class UseAssets extends JFrame implements ActionListener,
 
 	}
 
-	/**
-	 * 事件处理
-	 */
-	public void actionPerformed(ActionEvent e) {
-		Object obj = e.getSource();
-		if (obj == modifyInfo) {// 修改
-			AssetsBean bean = new AssetsBean();
-			bean.updateStatus(AssetsID, "借出");
-
-			AssetsTrjnBean atbean = new AssetsTrjnBean();
-			JourNo = "" + atbean.getId();// 获取ID
-			java.util.Date now = new java.util.Date();
-			DateFormat date = DateFormat.getDateTimeInstance();
-			String f4 = "" + date.format(now);
-			atbean.add(JourNo, "设备借用", AssetsID, f4, PersonID,
-					jTextField2.getText(), jTextField2.getText());
-			// 重新生成界面
-			this.dispose();
-
-			UseAssets useAssets = new UseAssets();
-			useAssets.pack();
-			useAssets.setVisible(true);
-		} else if (obj == clearInfo) {// 清空
-			setNull();
-		}
-		jTable.revalidate();
-
-	}
-
 	/*
-	 * 当表格被选中时的操作
+	 * 当表格被选中的操作
 	 */
 	@Override
-	public void valueChanged(ListSelectionEvent lse) {
+	public void valueChanged(ListSelectionEvent e) {
 		int[] selectedRow = jTable.getSelectedRows();
 		int[] selectedCol = jTable.getSelectedColumns();
 		// 定义文本框显示的内容
@@ -331,6 +295,34 @@ public class UseAssets extends JFrame implements ActionListener,
 		jTextField3.setEnabled(true);
 		modifyInfo.setEnabled(true);
 		clearInfo.setEnabled(true);
+	}
+
+	/*
+	 * 事件处理
+	 */
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		Object obj = e.getSource();
+		if (obj == modifyInfo) {// 修改
+			AssetsBean bean = new AssetsBean();
+			bean.updateStatus(AssetsID, "在库");
+
+			AssetsTrjnBean atbean = new AssetsTrjnBean();
+			JourNo = "" + atbean.getId();// 获取ID
+			java.util.Date now = new java.util.Date();
+			DateFormat date = DateFormat.getDateTimeInstance();
+			String f4 = "" + date.format(now);
+			atbean.add(JourNo, "设备归还", AssetsID, f4, PersonID,
+					jTextField2.getText(), jTextField2.getText());
+			// 重新生成界面
+			this.dispose();
+			BackAssets backAssets = new BackAssets();
+			backAssets.pack();
+			backAssets.setVisible(true);
+		} else if (obj == clearInfo) {// 清空
+			setNull();
+		}
+		jTable.revalidate();
 
 	}
 

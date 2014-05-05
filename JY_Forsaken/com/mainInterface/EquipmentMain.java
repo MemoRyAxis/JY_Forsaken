@@ -14,6 +14,8 @@ import com.interfaceModule.person.AddPerson;
 import com.interfaceModule.person.DeletePerson;
 import com.interfaceModule.person.ModifyPerson;
 import com.interfaceModule.sysMod.*;
+import com.interfaceModule.use.BackAssets;
+import com.interfaceModule.use.InvalidAssets;
 import com.interfaceModule.use.UseAssets;
 
 public class EquipmentMain extends JFrame implements ActionListener {
@@ -280,6 +282,15 @@ public class EquipmentMain extends JFrame implements ActionListener {
 			UseAssets use = new UseAssets();
 			use.pack();
 			use.setVisible(true);
+		} else if (obj == itemBack) {// 设备归还
+			BackAssets back = new BackAssets();
+			back.pack();
+			back.setVisible(true);
+		} else if (obj == itemInvalid) {// 设备报废
+			InvalidAssets invalid = new InvalidAssets();
+			invalid.pack();
+			invalid.setVisible(true);
+
 		}
 
 	}
