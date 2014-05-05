@@ -18,7 +18,8 @@ import com.dataOperate.PersonBean;
  */
 public class UseAssets extends JFrame implements ActionListener,
 		ListSelectionListener, ItemListener {
-	private static final long serialVersionUID = 1L;
+
+	private static final long serialVersionUID = 2669604123136596814L;
 
 	Container contentPane;
 	// 定义所用的面板
